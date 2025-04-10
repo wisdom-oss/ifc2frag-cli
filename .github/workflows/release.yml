@@ -17,6 +17,9 @@ jobs:
           - name: linux-aarch64
             runner: ubuntu-24.04-arm
 
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -32,32 +35,33 @@ jobs:
       - name: Compile
         run: deno task compile
 
+      - name: Read version
+        id: get_version
+        run: echo "version=$(jq -r .version deno.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Zip output
+        run: zip -j ifc2frag-cli-v${{ steps.get_version.outputs.version }}-${{ matrix.name }}.zip dist/*
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ matrix.name }}
-          path: dist/
+          name: ifc2frag-cli-v${{ steps.get_version.outputs.version }}-${{ matrix.name }}.zip
+          path: ifc2frag-cli-v*.zip
 
   tag:
     name: Create Tag
     runs-on: ubuntu-latest
     needs: build
     outputs:
-      version: ${{ steps.get_version.outputs.version }}
+      version: ${{ needs.build.outputs.version }}
 
     steps:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Read version from deno.json
-        id: get_version
-        run: |
-          version=$(jq -r .version deno.json)
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-
       - name: Check if tag already exists
         run: |
-          if git rev-parse "v${{ steps.get_version.outputs.version }}" >/dev/null 2>&1; then
+          if git rev-parse "v${{ needs.build.outputs.version }}" >/dev/null 2>&1; then
             echo "Tag already exists"
             exit 1
           fi
@@ -66,8 +70,8 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git tag "v${{ steps.get_version.outputs.version }}"
-          git push origin "v${{ steps.get_version.outputs.version }}"
+          git tag "v${{ needs.build.outputs.version }}"
+          git push origin "v${{ needs.build.outputs.version }}"
 
   release:
     name: Create Release
@@ -83,6 +87,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.tag.outputs.version }}
-          files: dist/**/*
+          files: dist/**/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
