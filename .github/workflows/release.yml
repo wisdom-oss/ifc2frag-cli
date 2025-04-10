@@ -40,8 +40,8 @@ jobs:
         run: echo "version=$(jq -r .version deno.json)" >> "$GITHUB_OUTPUT"
 
       - name: Zip output
-        run: zip -j ifc2frag-cli-v${{ steps.get_version.outputs.version }}-${{ matrix.name }}.zip dist/*
-
+        run: 7z a ifc2frag-cli-v${{ steps.get_version.outputs.version }}-${{ matrix.name }}.zip ./dist/*
+      
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
