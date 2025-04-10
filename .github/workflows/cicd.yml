@@ -23,7 +23,7 @@ jobs:
         run: deno install
 
       - name: Deno Check
-        run: deno check
+        run: deno check .
 
       - name: Deno Format Check
         run: deno fmt --check
