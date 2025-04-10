@@ -1,6 +1,7 @@
 {
   "version": "0.1.0+2.4",
-  "description": "something",
+  "description": "Convert IFC models into lightweight fragments.",
+  "denoVersion": "2.2.6",
   "nodeModulesDir": "manual",
   "imports": {
     "web-ifc": "npm:web-ifc@~0.0.66",
