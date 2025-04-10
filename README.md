@@ -15,7 +15,7 @@
 with [`.ifc` files](https://technical.buildingsmart.org/standards/ifc/) and rendering them in the browser.  
 To speed up loading times, we convert our BIM models into 
 [fragments](https://docs.thatopen.com/Tutorials/Components/Core/IfcLoader#%EF%B8%8F-getting-ifc-and-fragments).  
-This repo gives you a CLI to do exactly that—quick and easy.
+This repo gives you a CLI to do exactly that, quick and easy.
 
 ## Usage
 Just pass `.ifc` files to the CLI and it will create `.ifc.frag` files right 
@@ -34,7 +34,7 @@ Grab a prebuilt release for Linux x86_64, aarch64, or Windows x86_64 from the
 [Releases](https://github.com/wisdom-oss/ifc2frag-cli/releases) page.
 
 ## Build
-If you want to build it yourself, you’ll need [Deno](https://deno.com)—ideally 
+If you want to build it yourself, you’ll need [Deno](https://deno.com), ideally 
 the same version used in the [CI](./.github/workflows/checks.yml).  
 Then just run:
 ```shell
