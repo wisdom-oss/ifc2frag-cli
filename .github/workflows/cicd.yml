@@ -7,31 +7,9 @@ on:
   pull_request:
 
 jobs:
-  setup:
-    name: Setup Deno
+  checks:
+    name: Checks
     runs-on: ubuntu-latest
-    outputs:
-      deno-cache: ${{ steps.cache.outputs.cache-hit }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Cache Deno modules
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/deno
-          key: ${{ runner.os }}-deno-cache
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
-
-  check:
-    name: Deno Check
-    runs-on: ubuntu-latest
-    needs: setup
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -40,38 +18,15 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
+
+      - name: Install Deps
+        run: deno install
 
       - name: Deno Check
-        run: deno check .
-
-  lint:
-    name: Deno Lint
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
-
-      - name: Deno Lint
-        run: deno lint
-
-  format:
-    name: Deno Format Check
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
+        run: deno check
 
       - name: Deno Format Check
         run: deno fmt --check
+
+      - name: Deno Lint
+        run: deno lint
