@@ -15,7 +15,7 @@ jobs:
           - name: windows-x86_64
             runner: windows-latest
           - name: linux-aarch64
-            runner: ubuntu-22.04-ARM64
+            runner: ubuntu-latest-ARM64
 
     steps:
       - name: Check out code
