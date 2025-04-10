@@ -11,11 +11,11 @@ jobs:
       matrix:
         include:
           - name: linux-x86_64
-            runner: ubuntu-latest
+            runner: ubuntu-24.04
           - name: windows-x86_64
-            runner: windows-latest
+            runner: windows-2025
           - name: linux-aarch64
-            runner: ubuntu-latest-ARM64
+            runner: ubuntu-24.04-arm
 
     steps:
       - name: Check out code
