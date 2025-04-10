@@ -11,6 +11,6 @@
   "tasks": {
     "install": "deno install && deno task wasm",
     "wasm": "deno eval \"await Deno.copyFile('./node_modules/web-ifc/web-ifc-node.wasm', './web-ifc-node.wasm')\"",
-    "compile": "deno compile --allow-read --allow-write --allow-env --include web-ifc-node.wasm --output dist/ ifc2frag.ts"
+    "compile": "deno compile --allow-read --allow-write --allow-env --include ./web-ifc-node.wasm --output dist/ ifc2frag.ts"
   }
 }
