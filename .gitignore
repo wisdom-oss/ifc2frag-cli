@@ -1,0 +1,4 @@
+dist/
+files/
+node_modules/
+web-ifc-node.wasm

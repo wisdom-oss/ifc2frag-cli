@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0+2.4",
+  "description": "something",
+  "nodeModulesDir": "manual",
+  "imports": {
+    "web-ifc": "npm:web-ifc@~0.0.66",
+    "@thatopen/components": "npm:@thatopen/components@^2.4.6",
+    "@types/yargs": "npm:@types/yargs@^17.0.33",
+    "yargs": "npm:yargs@^17.7.2"
+  },
+  "tasks": {
+    "install": "deno install && deno task wasm",
+    "wasm": "deno eval \"await Deno.copyFile('./node_modules/web-ifc/web-ifc-node.wasm', './web-ifc-node.wasm')\"",
+    "compile": "deno compile --allow-read --allow-write --allow-env --include web-ifc-node.wasm --output dist/ ifc2frag.ts"
+  }
+}
